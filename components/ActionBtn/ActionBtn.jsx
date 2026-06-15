@@ -1,11 +1,14 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { useTema } from "../../contexts/TemaContext";
 
-export default function ActionBtn({ txt }) {
+export default function ActionBtn({ txt, executar }) {
   const { cores } = useTema();
 
   return (
-    <Pressable style={[styles.btn, { backgroundColor: cores.primary }]}>
+    <Pressable
+      style={[styles.btn, { backgroundColor: cores.primary }]}
+      onPress={executar}
+    >
       <Text style={[styles.txt, { color: cores.textPrimary }]}>{txt}</Text>
     </Pressable>
   );

@@ -1,12 +1,19 @@
 import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
 import { useTema } from "../contexts/TemaContext";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ActionBtn from "../components/ActionBtn/ActionBtn";
+import AuthContext from "../contexts/AuthProvider";
 
 export default function Login() {
+  const authContext = useContext(AuthContext);
+  const { usuario, msgErro, carregando, login } = authContext;
   const { cores } = useTema();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+
+  function handleLogin() {
+    login(email, senha);
+  }
 
   return (
     <View style={[styles.screen, { backgroundColor: cores.background }]}>
@@ -33,7 +40,10 @@ export default function Login() {
               E-mail
             </Text>
             <TextInput
-              style={[styles.input, { borderColor: cores.inputBorder }]}
+              style={[
+                styles.input,
+                { borderColor: cores.inputBorder, color: cores.textPrimary },
+              ]}
               value={email}
               onChangeText={setEmail}
             />
@@ -45,14 +55,17 @@ export default function Login() {
               Senha
             </Text>
             <TextInput
-              style={[styles.input, { borderColor: cores.inputBorder }]}
+              style={[
+                styles.input,
+                { borderColor: cores.inputBorder, color: cores.textPrimary },
+              ]}
               value={senha}
               onChangeText={setSenha}
             />
           </View>
         </View>
 
-        <ActionBtn txt="Entrar" />
+        <ActionBtn txt="Entrar" executar={handleLogin} />
       </View>
     </View>
   );

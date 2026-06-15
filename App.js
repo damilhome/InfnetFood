@@ -3,10 +3,14 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./screens/Home.jsx";
 import Login from "./screens/Login.jsx";
 import { TemaProvider, useTema } from "./contexts/TemaContext.js";
+import AuthContext, { AuthProvider } from "./contexts/AuthProvider.js";
+import { useContext } from "react";
 
 const Stack = createStackNavigator();
 
 function AppNavigator() {
+  const authContext = useContext(AuthContext);
+  const { usuario } = authContext;
   const { cores } = useTema();
 
   const stackNavigatorStyles = {
@@ -23,21 +27,31 @@ function AppNavigator() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Login"
-        screenOptions={stackNavigatorStyles}
-      >
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Home" component={Home} />
-      </Stack.Navigator>
+      {usuario === null ? (
+        <Stack.Navigator
+          initialRouteName="Login"
+          screenOptions={stackNavigatorStyles}
+        >
+          <Stack.Screen name="Login" component={Login} />
+        </Stack.Navigator>
+      ) : (
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={stackNavigatorStyles}
+        >
+          <Stack.Screen name="Home" component={Home} />
+        </Stack.Navigator>
+      )}
     </NavigationContainer>
   );
 }
 
 export default function App() {
   return (
-    <TemaProvider>
-      <AppNavigator />
-    </TemaProvider>
+    <AuthProvider>
+      <TemaProvider>
+        <AppNavigator />
+      </TemaProvider>
+    </AuthProvider>
   );
 }
