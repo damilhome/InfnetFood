@@ -6,7 +6,10 @@ export default function ActionBtn({ txt, executar }) {
 
   return (
     <Pressable
-      style={[styles.btn, { backgroundColor: cores.primary }]}
+      style={({ pressed }) => [
+        styles.btn,
+        { backgroundColor: pressed ? cores.primaryActive : cores.primary },
+      ]}
       onPress={executar}
     >
       <Text style={[styles.txt, { color: cores.textPrimary }]}>{txt}</Text>

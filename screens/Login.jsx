@@ -1,8 +1,17 @@
 import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 import { useTema } from "../contexts/TemaContext";
 import { useContext, useState } from "react";
 import ActionBtn from "../components/ActionBtn/ActionBtn";
 import AuthContext from "../contexts/AuthProvider";
+
+/* 
+  eye
+  eye-invisible
+*/
+
+export const regexEmail =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export default function Login() {
   const authContext = useContext(AuthContext);
@@ -10,8 +19,28 @@ export default function Login() {
   const { cores } = useTema();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [inputErrado, setInputErrado] = useState({
+    emailVazio: "",
+    senhaVazio: "",
+    emailInvalido: "",
+  });
 
   function handleLogin() {
+    const emailVazio = !email ? "Preencha o campo E-mail" : "";
+    const senhaVazio = !senha ? "Preencha o campo Senha" : "";
+    const emailInvalido =
+      email && !regexEmail.test(email) ? "Digite um e-mail válido" : "";
+
+    setInputErrado({
+      emailVazio,
+      senhaVazio,
+      emailInvalido,
+    });
+
+    if (emailVazio || senhaVazio || emailInvalido) {
+      return;
+    }
+
     login(email, senha);
   }
 
@@ -46,7 +75,20 @@ export default function Login() {
               ]}
               value={email}
               onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
             />
+            {inputErrado.emailVazio && (
+              <Text style={[styles.msgErro, { color: cores.error }]}>
+                {inputErrado.emailVazio}
+              </Text>
+            )}
+            {inputErrado.emailInvalido && (
+              <Text style={[styles.msgErro, { color: cores.error }]}>
+                {inputErrado.emailInvalido}
+              </Text>
+            )}
           </View>
           <View>
             <Text
@@ -61,11 +103,26 @@ export default function Login() {
               ]}
               value={senha}
               onChangeText={setSenha}
+              autoCapitalize="none"
+              autoCorrect={false}
+              secureTextEntry
             />
+            {inputErrado.senhaVazio && (
+              <Text style={[styles.msgErro, { color: cores.error }]}>
+                {inputErrado.senhaVazio}
+              </Text>
+            )}
           </View>
         </View>
 
-        <ActionBtn txt="Entrar" executar={handleLogin} />
+        <View style={styles.btnContainer}>
+          {msgErro && (
+            <Text style={{ color: cores.error, paddingLeft: 2 }}>
+              {msgErro}
+            </Text>
+          )}
+          <ActionBtn txt="Entrar" executar={handleLogin} />
+        </View>
       </View>
     </View>
   );
@@ -94,10 +151,12 @@ const styles = StyleSheet.create({
   input: {
     borderBottomWidth: 2,
   },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
+  msgErro: {
+    fontSize: 12,
+    alignSelf: "flex-end",
+    marginTop: 5,
+  },
+  btnContainer: {
+    gap: 8,
   },
 });

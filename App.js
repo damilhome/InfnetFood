@@ -5,7 +5,7 @@ import Login from "./screens/Login.jsx";
 import { TemaProvider, useTema } from "./contexts/TemaContext.js";
 import AuthContext, { AuthProvider } from "./contexts/AuthProvider.js";
 import { useContext } from "react";
-import SplashScreen from "./screens/SplashSreen.jsx";
+import SplashScreen from "./screens/SplashScreen.jsx";
 
 const Stack = createStackNavigator();
 

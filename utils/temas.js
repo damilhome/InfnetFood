@@ -1,6 +1,7 @@
 export const temaClaro = {
   // Cores Principais da Marca (Brand)
   primary: "#F25C05", // Botões primários, ícones ativos, destaques principais.
+  primaryActive: "#d64f00", // Botões primários, ícones ativos, destaques principais.
   primaryDark: "#CC4D04", // Estado de clique/press nos botões primários.
   primaryLight: "#FDEAE0", // Fundo suave para tags, badges de categorias ou mini-ícones.
 
@@ -26,6 +27,7 @@ export const temaClaro = {
 export const temaEscuro = {
   // Cores Principais da Marca (Brand)
   primary: "#F25C05", // Mantém o mesmo laranja para consistência da marca.
+  primaryActive: "#fa6c1a", // Mantém o mesmo laranja para consistência da marca.
   primaryDark: "#CC4D04", // Estado de clique/press nos botões primários.
   primaryLight: "#2D190E", // Versão escura/terracota para fundo de tags/badges no modo escuro.
 
