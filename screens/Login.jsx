@@ -1,14 +1,17 @@
-import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Pressable,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useTema } from "../contexts/TemaContext";
 import { useContext, useState } from "react";
 import ActionBtn from "../components/ActionBtn/ActionBtn";
 import AuthContext from "../contexts/AuthProvider";
-
-/* 
-  eye
-  eye-invisible
-*/
 
 export const regexEmail =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -46,106 +49,125 @@ export default function Login() {
   }
 
   return (
-    <View style={[styles.screen, { backgroundColor: cores.background }]}>
-      <View style={styles.container}>
-        <View>
-          <Text
-            style={[
-              styles.titulo,
-              styles.txtSize,
-              { color: cores.textPrimary },
-            ]}
-          >
-            Bem-vindo(a)!
-          </Text>
-          <Text style={[styles.txtSize, { color: cores.textPrimary }]}>
-            Entre com seu e-mail e senha
-          </Text>
-        </View>
-        <View style={styles.inputsContainer}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={[styles.screen, { backgroundColor: cores.background }]}>
+        <View style={styles.container}>
           <View>
             <Text
-              style={[styles.txt, styles.txtSize, { color: cores.textPrimary }]}
-            >
-              E-mail
-            </Text>
-            <TextInput
               style={[
-                styles.input,
-                { borderColor: cores.inputBorder, color: cores.textPrimary },
+                styles.titulo,
+                styles.txtSize,
+                { color: cores.textPrimary },
               ]}
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-            {inputErrado.emailVazio && (
-              <Text style={[styles.msgErro, { color: cores.error }]}>
-                {inputErrado.emailVazio}
-              </Text>
-            )}
-            {inputErrado.emailInvalido && (
-              <Text style={[styles.msgErro, { color: cores.error }]}>
-                {inputErrado.emailInvalido}
-              </Text>
-            )}
-          </View>
-          <View>
-            <Text
-              style={[styles.txt, styles.txtSize, { color: cores.textPrimary }]}
             >
-              Senha
+              Bem-vindo(a)!
             </Text>
-            <View style={styles.mostrarSenhaContainer}>
+            <Text style={[styles.txtSize, { color: cores.textPrimary }]}>
+              Entre com seu e-mail e senha
+            </Text>
+          </View>
+          <View style={styles.inputsContainer}>
+            <View>
+              <Text
+                style={[
+                  styles.txt,
+                  styles.txtSize,
+                  { color: cores.textPrimary },
+                ]}
+              >
+                E-mail
+              </Text>
               <TextInput
                 style={[
                   styles.input,
                   { borderColor: cores.inputBorder, color: cores.textPrimary },
                 ]}
-                value={senha}
-                onChangeText={setSenha}
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
-                secureTextEntry={!mostrarSenha}
               />
-              <Pressable
-                style={styles.botaoOlho}
-                onPress={() => setMostrarSenha(!mostrarSenha)}
-              >
-                {mostrarSenha ? (
-                  <AntDesign name="eye" size={20} color={cores.textSecondary} />
-                ) : (
-                  <AntDesign
-                    name="eye-invisible"
-                    size={20}
-                    color={cores.textSecondary}
-                  />
-                )}
-              </Pressable>
+              {inputErrado.emailVazio && (
+                <Text style={[styles.msgErro, { color: cores.error }]}>
+                  {inputErrado.emailVazio}
+                </Text>
+              )}
+              {inputErrado.emailInvalido && (
+                <Text style={[styles.msgErro, { color: cores.error }]}>
+                  {inputErrado.emailInvalido}
+                </Text>
+              )}
             </View>
-            {inputErrado.senhaVazio && (
-              <Text style={[styles.msgErro, { color: cores.error }]}>
-                {inputErrado.senhaVazio}
+            <View>
+              <Text
+                style={[
+                  styles.txt,
+                  styles.txtSize,
+                  { color: cores.textPrimary },
+                ]}
+              >
+                Senha
+              </Text>
+              <View style={styles.mostrarSenhaContainer}>
+                <TextInput
+                  style={[
+                    styles.input,
+                    {
+                      borderColor: cores.inputBorder,
+                      color: cores.textPrimary,
+                    },
+                  ]}
+                  value={senha}
+                  onChangeText={setSenha}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  secureTextEntry={!mostrarSenha}
+                />
+                <Pressable
+                  style={styles.botaoOlho}
+                  onPress={() => setMostrarSenha(!mostrarSenha)}
+                >
+                  {mostrarSenha ? (
+                    <AntDesign
+                      name="eye"
+                      size={20}
+                      color={cores.textSecondary}
+                    />
+                  ) : (
+                    <AntDesign
+                      name="eye-invisible"
+                      size={20}
+                      color={cores.textSecondary}
+                    />
+                  )}
+                </Pressable>
+              </View>
+              {inputErrado.senhaVazio && (
+                <Text style={[styles.msgErro, { color: cores.error }]}>
+                  {inputErrado.senhaVazio}
+                </Text>
+              )}
+            </View>
+          </View>
+          <View style={styles.btnContainer}>
+            {msgErro && (
+              <Text style={{ color: cores.error, paddingLeft: 2 }}>
+                {msgErro}
               </Text>
             )}
+            <ActionBtn txt="Entrar" executar={handleLogin} />
           </View>
         </View>
-
-        <View style={styles.btnContainer}>
-          {msgErro && (
-            <Text style={{ color: cores.error, paddingLeft: 2 }}>
-              {msgErro}
-            </Text>
-          )}
-          <ActionBtn txt="Entrar" executar={handleLogin} />
-        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
+  keyboard: {
+    flex: 1,
+  },
   screen: {
     flex: 1,
     justifyContent: "flex-start",
