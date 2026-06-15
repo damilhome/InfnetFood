@@ -1,7 +1,7 @@
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text, Pressable, ActivityIndicator } from "react-native";
 import { useTema } from "../../contexts/TemaContext";
 
-export default function ActionBtn({ txt, executar }) {
+export default function ActionBtn({ txt, executar, carregando }) {
   const { cores } = useTema();
 
   return (
@@ -12,7 +12,11 @@ export default function ActionBtn({ txt, executar }) {
       ]}
       onPress={executar}
     >
-      <Text style={[styles.txt, { color: cores.textPrimary }]}>{txt}</Text>
+      {carregando ? (
+        <ActivityIndicator size="small" color={cores.textPrimary} />
+      ) : (
+        <Text style={[styles.txt, { color: cores.textPrimary }]}>{txt}</Text>
+      )}
     </Pressable>
   );
 }
@@ -24,7 +28,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   txt: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "500",
   },
 });

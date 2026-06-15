@@ -6,6 +6,7 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   Keyboard,
+  ActivityIndicator,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useTema } from "../contexts/TemaContext";
@@ -156,7 +157,11 @@ export default function Login() {
                 {msgErro}
               </Text>
             )}
-            <ActionBtn txt="Entrar" executar={handleLogin} />
+            <ActionBtn
+              txt="Entrar"
+              executar={handleLogin}
+              carregando={carregando}
+            />
           </View>
         </View>
       </View>
