@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { logarUsuario } from "../services/autenticarFirebase";
 import { Alert } from "react-native";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../services/firebase";
 
 const AuthContext = createContext();
 export default AuthContext;
@@ -9,14 +11,27 @@ export function AuthProvider({ children }) {
   const [usuario, setUsuario] = useState(null);
   const [msgErro, setMsgErro] = useState("");
   const [carregando, setCarregando] = useState(false);
+  const [carregamentoInicial, setCarregamentoInicial] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUsuario(user);
+      } else {
+        setUsuario(null);
+      }
+      setCarregamentoInicial(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   async function login(email, senha) {
     setCarregando(true);
     setMsgErro("");
 
     try {
-      const user = await logarUsuario(email, senha);
-      setUsuario(user);
+      await logarUsuario(email, senha);
     } catch (error) {
       let mensagemErro = "Falha ao fazer login, por favor tente novamente.";
 
@@ -41,7 +56,9 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ usuario, msgErro, carregando, login }}>
+    <AuthContext.Provider
+      value={{ usuario, msgErro, carregando, carregamentoInicial, login }}
+    >
       {children}
     </AuthContext.Provider>
   );

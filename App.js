@@ -5,12 +5,13 @@ import Login from "./screens/Login.jsx";
 import { TemaProvider, useTema } from "./contexts/TemaContext.js";
 import AuthContext, { AuthProvider } from "./contexts/AuthProvider.js";
 import { useContext } from "react";
+import SplashScreen from "./screens/SplashSreen.jsx";
 
 const Stack = createStackNavigator();
 
 function AppNavigator() {
   const authContext = useContext(AuthContext);
-  const { usuario } = authContext;
+  const { usuario, carregamentoInicial } = authContext;
   const { cores } = useTema();
 
   const stackNavigatorStyles = {
@@ -24,6 +25,8 @@ function AppNavigator() {
     },
     headerTitleAlign: "center",
   };
+
+  if (carregamentoInicial) return <SplashScreen />;
 
   return (
     <NavigationContainer>
