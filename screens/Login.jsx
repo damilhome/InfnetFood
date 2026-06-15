@@ -19,6 +19,7 @@ export default function Login() {
   const { cores } = useTema();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [mostrarSenha, setMostrarSenha] = useState(false);
   const [inputErrado, setInputErrado] = useState({
     emailVazio: "",
     senhaVazio: "",
@@ -96,17 +97,33 @@ export default function Login() {
             >
               Senha
             </Text>
-            <TextInput
-              style={[
-                styles.input,
-                { borderColor: cores.inputBorder, color: cores.textPrimary },
-              ]}
-              value={senha}
-              onChangeText={setSenha}
-              autoCapitalize="none"
-              autoCorrect={false}
-              secureTextEntry
-            />
+            <View style={styles.mostrarSenhaContainer}>
+              <TextInput
+                style={[
+                  styles.input,
+                  { borderColor: cores.inputBorder, color: cores.textPrimary },
+                ]}
+                value={senha}
+                onChangeText={setSenha}
+                autoCapitalize="none"
+                autoCorrect={false}
+                secureTextEntry={!mostrarSenha}
+              />
+              <Pressable
+                style={styles.botaoOlho}
+                onPress={() => setMostrarSenha(!mostrarSenha)}
+              >
+                {mostrarSenha ? (
+                  <AntDesign name="eye" size={20} color={cores.textSecondary} />
+                ) : (
+                  <AntDesign
+                    name="eye-invisible"
+                    size={20}
+                    color={cores.textSecondary}
+                  />
+                )}
+              </Pressable>
+            </View>
             {inputErrado.senhaVazio && (
               <Text style={[styles.msgErro, { color: cores.error }]}>
                 {inputErrado.senhaVazio}
@@ -155,6 +172,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     alignSelf: "flex-end",
     marginTop: 5,
+  },
+  mostrarSenhaContainer: {
+    width: "100%",
+    position: "relative",
+    justifyContent: "center",
+  },
+  botaoOlho: {
+    position: "absolute",
+    right: 10,
   },
   btnContainer: {
     gap: 8,
