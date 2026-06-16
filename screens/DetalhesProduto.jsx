@@ -5,7 +5,6 @@ import {
   Pressable,
   Image,
   TextInput,
-  TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
 } from "react-native";
@@ -56,124 +55,118 @@ export default function DetalhesProduto() {
   }, []);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View
-        style={[
-          styles.container,
-          {
-            backgroundColor: cores.background,
-            paddingBottom: mostrarPadding ? 360 : 25,
-          },
-        ]}
-      >
-        <ScrollView ref={scrollViewRef} keyboardShouldPersistTaps="handled">
-          <Image source={{ uri: produto.imagem }} style={styles.imagem} />
-          <View style={styles.produtoContainer}>
-            <View style={styles.descritivo}>
-              <Text style={[styles.titulo, { color: cores.textPrimary }]}>
-                {produto.nome} - {produto.tamanho}
-              </Text>
-              <Text style={[styles.descricao, { color: cores.textSecondary }]}>
-                {produto.descricao}
-              </Text>
-            </View>
-            <View style={styles.descritivo}>
-              <Text style={[styles.titulo, { color: cores.textPrimary }]}>
-                Ingradientes
-              </Text>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: cores.background,
+          paddingBottom: mostrarPadding ? 360 : 25,
+        },
+      ]}
+    >
+      <ScrollView ref={scrollViewRef} keyboardShouldPersistTaps="handled">
+        <Image source={{ uri: produto.imagem }} style={styles.imagem} />
+        <View style={styles.produtoContainer}>
+          <View style={styles.descritivo}>
+            <Text style={[styles.titulo, { color: cores.textPrimary }]}>
+              {produto.nome} - {produto.tamanho}
+            </Text>
+            <Text style={[styles.descricao, { color: cores.textSecondary }]}>
+              {produto.descricao}
+            </Text>
+          </View>
+          <View style={styles.descritivo}>
+            <Text style={[styles.titulo, { color: cores.textPrimary }]}>
+              Ingradientes
+            </Text>
+            <Text style={{ color: cores.textSecondary, fontSize: 16 }}>
+              {produto.ingredientes.join(", ")}
+            </Text>
+          </View>
+          <View style={styles.descritivo}>
+            <Text style={[styles.titulo, { color: cores.textPrimary }]}>
+              Detalhes
+            </Text>
+            <View style={styles.icone}>
+              <MaterialIcons name="timer" size={15} color={cores.textPrimary} />
               <Text style={{ color: cores.textSecondary, fontSize: 16 }}>
-                {produto.ingredientes.join(", ")}
+                {produto.tempoEntrega}
               </Text>
-            </View>
-            <View style={styles.descritivo}>
-              <Text style={[styles.titulo, { color: cores.textPrimary }]}>
-                Detalhes
+              <Entypo name="dot-single" size={12} color={cores.textPrimary} />
+              <Text style={{ color: cores.textSecondary, fontSize: 16 }}>
+                Avaliação: {produto.avaliacao}
               </Text>
-              <View style={styles.icone}>
-                <MaterialIcons
-                  name="timer"
-                  size={15}
-                  color={cores.textPrimary}
-                />
-                <Text style={{ color: cores.textSecondary, fontSize: 16 }}>
-                  {produto.tempoEntrega}
-                </Text>
-                <Entypo name="dot-single" size={12} color={cores.textPrimary} />
-                <Text style={{ color: cores.textSecondary, fontSize: 16 }}>
-                  Avaliação: {produto.avaliacao}
-                </Text>
-                <MaterialIcons name="star" size={15} color="yellow" />
-              </View>
-            </View>
-            <View style={styles.descritivo}>
-              <View style={styles.icone}>
-                <MaterialIcons
-                  name="comment"
-                  size={15}
-                  color={cores.textPrimary}
-                />
-                <Text style={[styles.titulo, { color: cores.textPrimary }]}>
-                  Observações
-                </Text>
-              </View>
-              <TextInput
-                style={[
-                  styles.observacao,
-                  {
-                    backgroundColor: cores.inputBackground,
-                    color: cores.textPrimary,
-                  },
-                ]}
-                value={observacao}
-                onChangeText={setObservacao}
-                placeholder="Ex: Retirar cebola"
-                placeholderTextColor={cores.textSecondary}
-                maxLength={150}
-              />
-            </View>
-            <View style={styles.quantidadeContainer}>
-              <Text style={[styles.tituloMenor, { color: cores.textPrimary }]}>
-                Quantidade
-              </Text>
-              <View style={styles.indicadorQuantidade}>
-                <Pressable
-                  onPress={() =>
-                    setQuantidade((prevState) =>
-                      prevState === 1 ? prevState : prevState - 1,
-                    )
-                  }
-                >
-                  <AntDesign name="minus" size={20} color={cores.primary} />
-                </Pressable>
-                <Text style={{ color: cores.textPrimary, fontSize: 16 }}>
-                  {quantidade}
-                </Text>
-                <Pressable
-                  onPress={() => setQuantidade((prevState) => prevState + 1)}
-                >
-                  <AntDesign name="plus" size={20} color={cores.primary} />
-                </Pressable>
-              </View>
-            </View>
-            <View style={styles.precoContainer}>
-              <Text style={[styles.tituloMenor, { color: cores.textPrimary }]}>
-                Total
-              </Text>
-              <Text style={[styles.tituloMenor, { color: cores.textPrimary }]}>
-                R$ {calcularPreco()}
-              </Text>
+              <MaterialIcons name="star" size={15} color="yellow" />
             </View>
           </View>
-        </ScrollView>
-        <View style={styles.btn}>
-          <ActionBtn
-            txt="Adicionar ao carrinho"
-            executar={adicionarCarrinho}
-            carregando={false}
-          />
+          <View style={styles.descritivo}>
+            <View style={styles.icone}>
+              <MaterialIcons
+                name="comment"
+                size={15}
+                color={cores.textPrimary}
+              />
+              <Text style={[styles.titulo, { color: cores.textPrimary }]}>
+                Observações
+              </Text>
+            </View>
+            <TextInput
+              style={[
+                styles.observacao,
+                {
+                  backgroundColor: cores.inputBackground,
+                  color: cores.textPrimary,
+                },
+              ]}
+              value={observacao}
+              onChangeText={setObservacao}
+              placeholder="Ex: Retirar cebola"
+              placeholderTextColor={cores.textSecondary}
+              maxLength={150}
+            />
+          </View>
+          <View style={styles.quantidadeContainer}>
+            <Text style={[styles.tituloMenor, { color: cores.textPrimary }]}>
+              Quantidade
+            </Text>
+            <View style={styles.indicadorQuantidade}>
+              <Pressable
+                onPress={() =>
+                  setQuantidade((prevState) =>
+                    prevState === 1 ? prevState : prevState - 1,
+                  )
+                }
+              >
+                <AntDesign name="minus" size={20} color={cores.primary} />
+              </Pressable>
+              <Text style={{ color: cores.textPrimary, fontSize: 16 }}>
+                {quantidade}
+              </Text>
+              <Pressable
+                onPress={() => setQuantidade((prevState) => prevState + 1)}
+              >
+                <AntDesign name="plus" size={20} color={cores.primary} />
+              </Pressable>
+            </View>
+          </View>
+          <View style={styles.precoContainer}>
+            <Text style={[styles.tituloMenor, { color: cores.textPrimary }]}>
+              Total
+            </Text>
+            <Text style={[styles.tituloMenor, { color: cores.textPrimary }]}>
+              R$ {calcularPreco()}
+            </Text>
+          </View>
         </View>
+      </ScrollView>
+      <View style={styles.btn}>
+        <ActionBtn
+          txt="Adicionar ao carrinho"
+          executar={adicionarCarrinho}
+          carregando={false}
+        />
       </View>
-    </TouchableWithoutFeedback>
+    </View>
   );
 }
 
