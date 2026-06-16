@@ -11,7 +11,7 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import { useTema } from "../contexts/TemaContext";
 import { useContext, useState } from "react";
-import ActionBtn from "../components/ActionBtn/ActionBtn";
+import ActionBtn from "../components/ActionBtn";
 import AuthContext from "../contexts/AuthProvider";
 
 export const regexEmail =

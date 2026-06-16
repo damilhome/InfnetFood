@@ -6,13 +6,14 @@ import { TemaProvider, useTema } from "./contexts/TemaContext.js";
 import AuthContext, { AuthProvider } from "./contexts/AuthProvider.js";
 import { useContext } from "react";
 import SplashScreen from "./screens/SplashScreen.jsx";
+import { StatusBar } from "expo-status-bar";
 
 const Stack = createStackNavigator();
 
 function AppNavigator() {
   const authContext = useContext(AuthContext);
   const { usuario, carregamentoInicial } = authContext;
-  const { cores } = useTema();
+  const { cores, modoEscuro } = useTema();
 
   const stackNavigatorStyles = {
     headerStyle: {
@@ -30,6 +31,11 @@ function AppNavigator() {
 
   return (
     <NavigationContainer>
+      <StatusBar
+        style={modoEscuro ? "light" : "dark"}
+        translucent={false}
+        backgroundColor={cores.background}
+      />
       {usuario === null ? (
         <Stack.Navigator
           initialRouteName="Login"
@@ -42,7 +48,11 @@ function AppNavigator() {
           initialRouteName="Home"
           screenOptions={stackNavigatorStyles}
         >
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Home"
+            component={Home}
+          />
         </Stack.Navigator>
       )}
     </NavigationContainer>

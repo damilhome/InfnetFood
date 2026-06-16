@@ -1,5 +1,5 @@
 import { StyleSheet, Text, Pressable, ActivityIndicator } from "react-native";
-import { useTema } from "../../contexts/TemaContext";
+import { useTema } from "../contexts/TemaContext";
 
 export default function ActionBtn({ txt, executar, carregando }) {
   const { cores } = useTema();
