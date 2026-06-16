@@ -1,14 +1,23 @@
 import { StyleSheet, Text, Pressable, Image } from "react-native";
 import { useTema } from "../contexts/TemaContext";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CardCategoria({ categoria }) {
   const { cores } = useTema();
+  const navigation = useNavigation();
+
   return (
     <Pressable
       style={({ pressed }) => [
         styles.card,
         { transform: [{ scale: pressed ? 0.96 : 1 }] },
       ]}
+      onPress={() =>
+        navigation.navigate("Produtos", {
+          categoriaId: categoria.id,
+          nomeCategoria: categoria.nome,
+        })
+      }
     >
       <Image source={{ uri: categoria.imagem }} style={styles.imagem} />
       <Text style={[styles.titulo, { color: cores.textPrimary }]}>

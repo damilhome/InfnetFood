@@ -1,12 +1,15 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Home from "./screens/Home.jsx";
-import Login from "./screens/Login.jsx";
 import { TemaProvider, useTema } from "./contexts/TemaContext.js";
 import AuthContext, { AuthProvider } from "./contexts/AuthProvider.js";
 import { useContext } from "react";
-import SplashScreen from "./screens/SplashScreen.jsx";
 import { StatusBar } from "expo-status-bar";
+
+import Home from "./screens/Home.jsx";
+import Login from "./screens/Login.jsx";
+import SplashScreen from "./screens/SplashScreen.jsx";
+import Produtos from "./screens/Produtos.jsx";
+import { ProdutosProvider } from "./contexts/ProdutosContext.js";
 
 const Stack = createStackNavigator();
 
@@ -30,32 +33,35 @@ function AppNavigator() {
   if (carregamentoInicial) return <SplashScreen />;
 
   return (
-    <NavigationContainer>
-      <StatusBar
-        style={modoEscuro ? "light" : "dark"}
-        translucent={false}
-        backgroundColor={cores.background}
-      />
-      {usuario === null ? (
-        <Stack.Navigator
-          initialRouteName="Login"
-          screenOptions={stackNavigatorStyles}
-        >
-          <Stack.Screen name="Login" component={Login} />
-        </Stack.Navigator>
-      ) : (
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={stackNavigatorStyles}
-        >
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Home"
-            component={Home}
-          />
-        </Stack.Navigator>
-      )}
-    </NavigationContainer>
+    <ProdutosProvider>
+      <NavigationContainer>
+        <StatusBar
+          style={modoEscuro ? "light" : "dark"}
+          translucent={false}
+          backgroundColor={cores.background}
+        />
+        {usuario === null ? (
+          <Stack.Navigator
+            initialRouteName="Login"
+            screenOptions={stackNavigatorStyles}
+          >
+            <Stack.Screen name="Login" component={Login} />
+          </Stack.Navigator>
+        ) : (
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={stackNavigatorStyles}
+          >
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Home"
+              component={Home}
+            />
+            <Stack.Screen name="Produtos" component={Produtos} />
+          </Stack.Navigator>
+        )}
+      </NavigationContainer>
+    </ProdutosProvider>
   );
 }
 

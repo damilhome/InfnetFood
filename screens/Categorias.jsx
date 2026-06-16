@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { useTema } from "../contexts/TemaContext";
-import { categorias } from "../utils/categorias";
+import { useProdutos } from "../contexts/ProdutosContext";
 import CardCategoria from "../components/CardCategoria";
 
 export default function Categorias() {
   const { cores } = useTema();
+  const { categorias } = useProdutos();
 
   return (
     <View style={[styles.container, { backgroundColor: cores.background }]}>
@@ -36,5 +37,6 @@ const styles = StyleSheet.create({
   },
   catContainer: {
     gap: 15,
+    paddingBottom: 15,
   },
 });

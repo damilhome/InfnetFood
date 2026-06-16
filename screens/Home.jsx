@@ -43,7 +43,7 @@ export default function App() {
       })}
     >
       <Tab.Screen name="Inicio" component={Categorias} />
-      <Tab.Screen name="Produtos" component={Produtos} />
+      {/* <Tab.Screen name="Produtos" component={Produtos} /> */}
       <Tab.Screen name="Carrinho" component={Carrinho} />
       <Tab.Screen name="Perfil" component={Perfil} />
     </Tab.Navigator>
