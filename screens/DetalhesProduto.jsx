@@ -26,6 +26,11 @@ export default function DetalhesProduto() {
 
   function adicionarCarrinho() {}
 
+  function calcularPreco() {
+    const preco = produto.preco * quantidade;
+    return preco.toFixed(2).replace(".", ",");
+  }
+
   useEffect(() => {
     let timerId;
     const adicionarPadding = Keyboard.addListener("keyboardDidShow", () => {
@@ -150,7 +155,7 @@ export default function DetalhesProduto() {
                 Total
               </Text>
               <Text style={[styles.tituloMenor, { color: cores.textPrimary }]}>
-                R$ {produto.preco * quantidade}
+                R$ {calcularPreco()}
               </Text>
             </View>
           </View>
