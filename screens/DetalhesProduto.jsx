@@ -12,6 +12,7 @@ import {
 import { useRoute } from "@react-navigation/native";
 import { MaterialIcons, AntDesign, Entypo } from "@expo/vector-icons";
 import { useTema } from "../contexts/TemaContext";
+import { useCarrinho } from "../contexts/CarrinhoContext";
 import { useState, useEffect, useRef } from "react";
 import ActionBtn from "../components/ActionBtn";
 
@@ -19,12 +20,16 @@ export default function DetalhesProduto() {
   const route = useRoute();
   const { produto } = route.params;
   const { cores } = useTema();
+  const { adicionarProduto } = useCarrinho();
   const [observacao, setObservacao] = useState();
   const [mostrarPadding, setMostrarPadding] = useState(false);
   const [quantidade, setQuantidade] = useState(1);
   const scrollViewRef = useRef(null);
 
-  function adicionarCarrinho() {}
+  function adicionarCarrinho() {
+    const produtoCompleto = { ...produto, quantidade: quantidade };
+    adicionarProduto(produtoCompleto);
+  }
 
   function calcularPreco() {
     const preco = produto.preco * quantidade;
