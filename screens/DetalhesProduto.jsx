@@ -52,7 +52,7 @@ export default function DetalhesProduto() {
           styles.container,
           {
             backgroundColor: cores.background,
-            paddingBottom: mostrarPadding ? 360 : 0,
+            paddingBottom: mostrarPadding ? 360 : 25,
           },
         ]}
       >
@@ -170,7 +170,6 @@ export default function DetalhesProduto() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 25,
   },
   imagem: {
     width: "100%",
