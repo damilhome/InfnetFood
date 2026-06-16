@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View, Pressable, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useTema } from "../contexts/TemaContext";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CardProduto({ produto }) {
   const { cores } = useTema();
+  const navigation = useNavigation();
+
   return (
     <Pressable
       style={({ pressed }) => [
@@ -13,6 +16,7 @@ export default function CardProduto({ produto }) {
           transform: [{ scale: pressed ? 0.96 : 1 }],
         },
       ]}
+      onPress={() => navigation.navigate("Detalhes", { produto })}
     >
       <View style={styles.infos}>
         <View>
@@ -23,12 +27,10 @@ export default function CardProduto({ produto }) {
             {produto.tamanho}
           </Text>
           <View style={styles.entrega}>
-            <MaterialIcons
-              name="motorcycle"
-              size={15}
-              color={cores.textSecondary}
-            />
-            <Text style={{ color: cores.textSecondary }}>R$ 7,00</Text>
+            <MaterialIcons name="timer" size={15} color={cores.textPrimary} />
+            <Text style={{ color: cores.textSecondary }}>
+              {produto.tempoEntrega}
+            </Text>
           </View>
         </View>
         <Text style={{ color: cores.textPrimary, fontWeight: "bold" }}>

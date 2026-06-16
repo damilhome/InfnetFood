@@ -1,15 +1,16 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { TemaProvider, useTema } from "./contexts/TemaContext.js";
-import AuthContext, { AuthProvider } from "./contexts/AuthProvider.js";
-import { useContext } from "react";
 import { StatusBar } from "expo-status-bar";
+import { useContext } from "react";
+import AuthContext, { AuthProvider } from "./contexts/AuthProvider.js";
+import { TemaProvider, useTema } from "./contexts/TemaContext.js";
+import { ProdutosProvider } from "./contexts/ProdutosContext.js";
 
 import Home from "./screens/Home.jsx";
 import Login from "./screens/Login.jsx";
 import SplashScreen from "./screens/SplashScreen.jsx";
 import Produtos from "./screens/Produtos.jsx";
-import { ProdutosProvider } from "./contexts/ProdutosContext.js";
+import DetalhesProduto from "./screens/DetalhesProduto.jsx";
 
 const Stack = createStackNavigator();
 
@@ -58,6 +59,7 @@ function AppNavigator() {
               component={Home}
             />
             <Stack.Screen name="Produtos" component={Produtos} />
+            <Stack.Screen name="Detalhes" component={DetalhesProduto} />
           </Stack.Navigator>
         )}
       </NavigationContainer>
