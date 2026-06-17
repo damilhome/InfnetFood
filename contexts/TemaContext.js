@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from "react";
-import { temaClaro, temaEscuro } from "../utils/temas";
+import { temaClaro, temaEscuro } from "../data/temas";
 
 const TemaContext = createContext();
 
