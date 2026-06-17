@@ -8,7 +8,7 @@ import {
   Keyboard,
   ScrollView,
 } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { MaterialIcons, AntDesign, Entypo } from "@expo/vector-icons";
 import { useTema } from "../contexts/TemaContext";
 import { useCarrinho } from "../contexts/CarrinhoContext";
@@ -21,13 +21,19 @@ export default function DetalhesProduto() {
   const { cores } = useTema();
   const { adicionarProduto } = useCarrinho();
   const [observacao, setObservacao] = useState();
-  const [mostrarPadding, setMostrarPadding] = useState(false);
   const [quantidade, setQuantidade] = useState(1);
+  const [mostrarPadding, setMostrarPadding] = useState(false);
   const scrollViewRef = useRef(null);
+  const navigation = useNavigation();
 
   function adicionarCarrinho() {
-    const produtoCompleto = { ...produto, quantidade: quantidade };
+    const produtoCompleto = {
+      ...produto,
+      quantidade: quantidade,
+      observacao: observacao,
+    };
     adicionarProduto(produtoCompleto);
+    navigation.goBack();
   }
 
   function calcularPreco() {

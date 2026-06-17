@@ -23,7 +23,7 @@ export default function ActionBtn({ txt, executar, carregando }) {
 
 const styles = StyleSheet.create({
   btn: {
-    paddingVertical: 8,
+    paddingVertical: 12,
     borderRadius: 8,
     alignItems: "center",
   },
