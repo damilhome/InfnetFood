@@ -53,7 +53,6 @@ export default function CardPedido({ pedido }) {
 const styles = StyleSheet.create({
   card: {
     padding: 15,
-    borderWidth: 1,
     borderRadius: 12,
     gap: 15,
   },
