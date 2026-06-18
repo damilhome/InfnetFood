@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
     paddingTop: 45,
-    paddingBottom: 15,
   },
   titulo: {
     padding: 15,
@@ -36,6 +35,7 @@ const styles = StyleSheet.create({
   },
   pedidosContainer: {
     gap: 5,
+    paddingBottom: 15,
   },
 });
 
