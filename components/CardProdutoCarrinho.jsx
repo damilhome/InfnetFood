@@ -51,14 +51,16 @@ export default function CardProdutoCarrinho({ produto, index }) {
           R$ {calcularPreco(produto.preco, produto.quantidade)}
         </Text>
       </View>
-      <View>
-        <Text style={[styles.tamanhoTxt, { color: cores.textPrimary }]}>
-          Observação
-        </Text>
-        <Text style={[styles.observacao, { color: cores.textSecondary }]}>
-          {produto.observacao}
-        </Text>
-      </View>
+      {produto.observacao && (
+        <View>
+          <Text style={[styles.tamanhoTxt, { color: cores.textPrimary }]}>
+            Observação
+          </Text>
+          <Text style={[styles.observacao, { color: cores.textSecondary }]}>
+            {produto.observacao}
+          </Text>
+        </View>
+      )}
     </View>
   );
 }
