@@ -48,6 +48,11 @@ export function CarrinhoProvider({ children }) {
     }
   }
 
+  async function realizarCompra() {
+    setListaProdutos([]);
+    await removerDados(CHAVE_STORAGE);
+  }
+
   function aumentarQuantidade(id) {
     const novaLista = listaProdutos.map((produto) => {
       if (produto.id === id) {
@@ -77,7 +82,7 @@ export function CarrinhoProvider({ children }) {
   useEffect(() => {
     async function carregarCarrinho() {
       try {
-        const dadosProdutos = await recuperarDados("carrinhoDeProdutos");
+        const dadosProdutos = await recuperarDados(CHAVE_STORAGE);
         if (dadosProdutos !== null) {
           setListaProdutos(dadosProdutos);
         }
@@ -99,6 +104,7 @@ export function CarrinhoProvider({ children }) {
         aumentarQuantidade,
         diminuirQuantidade,
         removerProdutoLista,
+        realizarCompra,
       }}
     >
       {children}

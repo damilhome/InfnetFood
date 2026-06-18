@@ -12,6 +12,7 @@ import SplashScreen from "./screens/SplashScreen.jsx";
 import Produtos from "./screens/Produtos.jsx";
 import DetalhesProduto from "./screens/DetalhesProduto.jsx";
 import { CarrinhoProvider } from "./contexts/CarrinhoContext.js";
+import { PedidosProvider } from "./contexts/PedidosContext.js";
 
 const Stack = createStackNavigator();
 
@@ -36,36 +37,38 @@ function AppNavigator() {
 
   return (
     <CarrinhoProvider>
-      <ProdutosProvider>
-        <NavigationContainer>
-          <StatusBar
-            style={modoEscuro ? "light" : "dark"}
-            translucent={false}
-            backgroundColor={cores.background}
-          />
-          {usuario === null ? (
-            <Stack.Navigator
-              initialRouteName="Login"
-              screenOptions={stackNavigatorStyles}
-            >
-              <Stack.Screen name="Login" component={Login} />
-            </Stack.Navigator>
-          ) : (
-            <Stack.Navigator
-              initialRouteName="Home"
-              screenOptions={stackNavigatorStyles}
-            >
-              <Stack.Screen
-                options={{ headerShown: false }}
-                name="Home"
-                component={Home}
-              />
-              <Stack.Screen name="Produtos" component={Produtos} />
-              <Stack.Screen name="Detalhes" component={DetalhesProduto} />
-            </Stack.Navigator>
-          )}
-        </NavigationContainer>
-      </ProdutosProvider>
+      <PedidosProvider>
+        <ProdutosProvider>
+          <NavigationContainer>
+            <StatusBar
+              style={modoEscuro ? "light" : "dark"}
+              translucent={false}
+              backgroundColor={cores.background}
+            />
+            {usuario === null ? (
+              <Stack.Navigator
+                initialRouteName="Login"
+                screenOptions={stackNavigatorStyles}
+              >
+                <Stack.Screen name="Login" component={Login} />
+              </Stack.Navigator>
+            ) : (
+              <Stack.Navigator
+                initialRouteName="Home"
+                screenOptions={stackNavigatorStyles}
+              >
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Home"
+                  component={Home}
+                />
+                <Stack.Screen name="Produtos" component={Produtos} />
+                <Stack.Screen name="Detalhes" component={DetalhesProduto} />
+              </Stack.Navigator>
+            )}
+          </NavigationContainer>
+        </ProdutosProvider>
+      </PedidosProvider>
     </CarrinhoProvider>
   );
 }

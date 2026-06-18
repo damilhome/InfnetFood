@@ -13,10 +13,17 @@ import { useCarrinho } from "../contexts/CarrinhoContext";
 import CardProdutoCarrinho from "../components/CardProdutoCarrinho";
 import { useState } from "react";
 import ActionBtn from "../components/ActionBtn";
+import { useListaPedidos } from "../contexts/PedidosContext";
 
 export default function Carrinho() {
-  const { listaProdutos, adicionarProduto, taxaEntrega, setTaxaEntrega } =
-    useCarrinho();
+  const {
+    listaProdutos,
+    adicionarProduto,
+    taxaEntrega,
+    setTaxaEntrega,
+    realizarCompra,
+  } = useCarrinho();
+  const { adicionarPedido } = useListaPedidos();
   const { cores } = useTema();
   const [entrega, setEntrega] = useState(true);
 
@@ -39,7 +46,19 @@ export default function Carrinho() {
   }
 
   function handleRealizarCompra() {
-    Alert.alert("Compra realizada!");
+    const agora = new Date();
+    const hora = agora.toLocaleTimeString();
+    const data = agora.toLocaleDateString();
+    const foiEntrega = entrega;
+    const compraAtual = {
+      produtos: listaProdutos,
+      hora,
+      data,
+      valorEntrega: taxaEntrega,
+      valorTotal: calcularTotal() + taxaEntrega,
+    };
+    adicionarPedido(compraAtual);
+    realizarCompra();
   }
 
   return listaProdutos.length >= 1 ? (
