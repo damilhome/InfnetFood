@@ -38,5 +38,3 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
 });
-
-/* TODO: guardar informação se foi entrega ou retirada ao salvar carrinho na lista de produtos */

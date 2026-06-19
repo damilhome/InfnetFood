@@ -9,6 +9,7 @@ import Produtos from "./Produtos";
 import Carrinho from "./Carrinho";
 import Perfil from "./Perfil";
 import Pedidos from "./Pedidos";
+import Mapa from "./Mapa";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,6 +34,8 @@ export default function App() {
             iconName = focused ? "cart" : "cart-outline";
           } else if (route.name === "Pedidos") {
             iconName = focused ? "newspaper" : "newspaper-outline";
+          } else if (route.name === "Mapa") {
+            iconName = focused ? "map" : "map-outline";
           } else if (route.name === "Perfil") {
             iconName = focused ? "person" : "person-outline";
           }
@@ -45,6 +48,7 @@ export default function App() {
       {/* <Tab.Screen name="Produtos" component={Produtos} /> */}
       <Tab.Screen name="Carrinho" component={Carrinho} />
       <Tab.Screen name="Pedidos" component={Pedidos} />
+      <Tab.Screen name="Mapa" component={Mapa} />
       <Tab.Screen name="Perfil" component={Perfil} />
     </Tab.Navigator>
   );
