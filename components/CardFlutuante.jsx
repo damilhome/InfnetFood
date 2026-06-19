@@ -1,12 +1,16 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { useTema } from "../contexts/TemaContext";
 import { Ionicons } from "@expo/vector-icons";
 import ActionBtn from "./ActionBtn";
 
 export default function CardFlutuante({ restaurante, fecharCard }) {
   const { cores } = useTema();
+  const navigation = useNavigation();
 
-  function handleDetalhes() {}
+  function handleDetalhes() {
+    navigation.navigate("Restaurante", { restaurante });
+  }
 
   return (
     <View

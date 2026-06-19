@@ -11,6 +11,7 @@ import Login from "./screens/Login.jsx";
 import SplashScreen from "./screens/SplashScreen.jsx";
 import Produtos from "./screens/Produtos.jsx";
 import DetalhesProduto from "./screens/DetalhesProduto.jsx";
+import Restaurante from "./screens/Restaurante.jsx";
 import { CarrinhoProvider } from "./contexts/CarrinhoContext.js";
 import { PedidosProvider } from "./contexts/PedidosContext.js";
 
@@ -64,6 +65,7 @@ function AppNavigator() {
                 />
                 <Stack.Screen name="Produtos" component={Produtos} />
                 <Stack.Screen name="Detalhes" component={DetalhesProduto} />
+                <Stack.Screen name="Restaurante" component={Restaurante} />
               </Stack.Navigator>
             )}
           </NavigationContainer>
