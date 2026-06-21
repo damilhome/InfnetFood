@@ -10,6 +10,7 @@ import Carrinho from "./Carrinho";
 import Perfil from "./Perfil";
 import Pedidos from "./Pedidos";
 import Mapa from "./Mapa";
+import Configuracoes from "./Configuracoes";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,6 +39,8 @@ export default function App() {
             iconName = focused ? "map" : "map-outline";
           } else if (route.name === "Perfil") {
             iconName = focused ? "person" : "person-outline";
+          } else if (route.name === "Configuracoes") {
+            iconName = focused ? "settings" : "settings-outline";
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -45,11 +48,11 @@ export default function App() {
       })}
     >
       <Tab.Screen name="Inicio" component={Categorias} />
-      {/* <Tab.Screen name="Produtos" component={Produtos} /> */}
       <Tab.Screen name="Carrinho" component={Carrinho} />
       <Tab.Screen name="Pedidos" component={Pedidos} />
       <Tab.Screen name="Mapa" component={Mapa} />
       <Tab.Screen name="Perfil" component={Perfil} />
+      <Tab.Screen name="Configuracoes" component={Configuracoes} />
     </Tab.Navigator>
   );
 }
