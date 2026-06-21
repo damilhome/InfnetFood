@@ -7,13 +7,15 @@ import {
   Pressable,
   Alert,
 } from "react-native";
+import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { useTema } from "../contexts/TemaContext";
 import { useCarrinho } from "../contexts/CarrinhoContext";
-import CardProdutoCarrinho from "../components/CardProdutoCarrinho";
-import { useState } from "react";
-import ActionBtn from "../components/ActionBtn";
 import { useListaPedidos } from "../contexts/PedidosContext";
+import CardProdutoCarrinho from "../components/CardProdutoCarrinho";
+import ActionBtn from "../components/ActionBtn";
+import ValorPedidoCarrinho from "../components/ValorPedidoCarrinho";
 
 export default function Carrinho() {
   const {
@@ -26,6 +28,7 @@ export default function Carrinho() {
   const { adicionarPedido } = useListaPedidos();
   const { cores } = useTema();
   const [entrega, setEntrega] = useState(true);
+  const navigation = useNavigation();
 
   function marcacaoEntrega(formaEntrega) {
     if (formaEntrega === "entrega") {
@@ -45,20 +48,32 @@ export default function Carrinho() {
     return total;
   }
 
-  function handleRealizarCompra() {
+  function pegarData() {
     const agora = new Date();
     const hora = agora.toLocaleTimeString();
     const data = agora.toLocaleDateString();
+
+    return { data, hora };
+  }
+
+  function formatarPedido() {
+    const { data, hora } = pegarData();
+    const subtotal = calcularTotal();
     const foiEntrega = entrega;
     const compraAtual = {
       produtos: listaProdutos,
       hora,
       data,
-      valorEntrega: taxaEntrega,
-      valorTotal: calcularTotal() + taxaEntrega,
+      subtotal,
+      taxaEntrega,
+      valorTotal: subtotal + taxaEntrega,
     };
-    adicionarPedido(compraAtual);
-    realizarCompra();
+    return compraAtual;
+  }
+
+  function irParaCheckout() {
+    const compraAtual = formatarPedido();
+    navigation.navigate("Checkout", { compraAtual });
   }
 
   return listaProdutos.length >= 1 ? (
@@ -72,51 +87,12 @@ export default function Carrinho() {
             <CardProdutoCarrinho key={index} produto={prod} index={index} />
           ))}
         </View>
-        <View
-          style={[
-            styles.containerTotal,
-            { borderBottomColor: cores.inputBorder },
-          ]}
-        >
-          <View style={styles.infosContainer}>
-            <View style={styles.subInfos}>
-              <Text style={[styles.tamanhoTxt, { color: cores.textPrimary }]}>
-                Subtotal
-              </Text>
-              <Text style={[styles.tamanhoTxt, { color: cores.textPrimary }]}>
-                Taxa de entrega
-              </Text>
-            </View>
-            <Text
-              style={[
-                styles.tamanhoTxt,
-                styles.bold,
-                { color: cores.textPrimary },
-              ]}
-            >
-              Total
-            </Text>
-          </View>
-          <View style={styles.infosContainer}>
-            <View style={styles.subInfos}>
-              <Text style={[styles.tamanhoTxt, { color: cores.textPrimary }]}>
-                R$ {calcularTotal().toFixed(2).replace(".", ",")}
-              </Text>
-              <Text style={[styles.tamanhoTxt, { color: cores.textPrimary }]}>
-                R$ {taxaEntrega.toFixed(2).replace(".", ",")}
-              </Text>
-            </View>
-            <Text
-              style={[
-                styles.tamanhoTxt,
-                styles.bold,
-                { color: cores.textPrimary },
-              ]}
-            >
-              R$ {(calcularTotal() + taxaEntrega).toFixed(2).replace(".", ",")}
-            </Text>
-          </View>
-        </View>
+
+        <ValorPedidoCarrinho
+          subtotal={calcularTotal()}
+          taxaEntrega={taxaEntrega}
+        />
+
         <View style={styles.entregaContainer}>
           <Text
             style={[
@@ -171,8 +147,8 @@ export default function Carrinho() {
       </ScrollView>
       <View style={styles.btn}>
         <ActionBtn
-          txt="Realizar compra"
-          executar={handleRealizarCompra}
+          txt="Continuar"
+          executar={irParaCheckout}
           carregando={false}
         />
       </View>

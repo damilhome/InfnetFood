@@ -12,8 +12,12 @@ import SplashScreen from "./screens/SplashScreen.jsx";
 import Produtos from "./screens/Produtos.jsx";
 import DetalhesProduto from "./screens/DetalhesProduto.jsx";
 import Restaurante from "./screens/Restaurante.jsx";
+import Checkout from "./screens/Checkout.jsx";
+import CadastrarEndereco from "./screens/CadastrarEndereco.jsx";
 import { CarrinhoProvider } from "./contexts/CarrinhoContext.js";
 import { PedidosProvider } from "./contexts/PedidosContext.js";
+import EnderecoProvider from "./contexts/EnderecoContext.js";
+import { CheckoutProvider } from "./contexts/CheckoutContex.js";
 
 const Stack = createStackNavigator();
 
@@ -37,41 +41,50 @@ function AppNavigator() {
   if (carregamentoInicial) return <SplashScreen />;
 
   return (
-    <CarrinhoProvider>
-      <PedidosProvider>
-        <ProdutosProvider>
-          <NavigationContainer>
-            <StatusBar
-              style={modoEscuro ? "light" : "dark"}
-              translucent={false}
-              backgroundColor={cores.background}
-            />
-            {usuario === null ? (
-              <Stack.Navigator
-                initialRouteName="Login"
-                screenOptions={stackNavigatorStyles}
-              >
-                <Stack.Screen name="Login" component={Login} />
-              </Stack.Navigator>
-            ) : (
-              <Stack.Navigator
-                initialRouteName="Home"
-                screenOptions={stackNavigatorStyles}
-              >
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="Home"
-                  component={Home}
+    <EnderecoProvider>
+      <CarrinhoProvider>
+        <PedidosProvider>
+          <ProdutosProvider>
+            <CheckoutProvider>
+              <NavigationContainer>
+                <StatusBar
+                  style={modoEscuro ? "light" : "dark"}
+                  translucent={false}
+                  backgroundColor={cores.background}
                 />
-                <Stack.Screen name="Produtos" component={Produtos} />
-                <Stack.Screen name="Detalhes" component={DetalhesProduto} />
-                <Stack.Screen name="Restaurante" component={Restaurante} />
-              </Stack.Navigator>
-            )}
-          </NavigationContainer>
-        </ProdutosProvider>
-      </PedidosProvider>
-    </CarrinhoProvider>
+                {usuario === null ? (
+                  <Stack.Navigator
+                    initialRouteName="Login"
+                    screenOptions={stackNavigatorStyles}
+                  >
+                    <Stack.Screen name="Login" component={Login} />
+                  </Stack.Navigator>
+                ) : (
+                  <Stack.Navigator
+                    initialRouteName="Home"
+                    screenOptions={stackNavigatorStyles}
+                  >
+                    <Stack.Screen
+                      options={{ headerShown: false }}
+                      name="Home"
+                      component={Home}
+                    />
+                    <Stack.Screen name="Produtos" component={Produtos} />
+                    <Stack.Screen name="Detalhes" component={DetalhesProduto} />
+                    <Stack.Screen name="Restaurante" component={Restaurante} />
+                    <Stack.Screen name="Checkout" component={Checkout} />
+                    <Stack.Screen
+                      name="Cadastrar endereço"
+                      component={CadastrarEndereco}
+                    />
+                  </Stack.Navigator>
+                )}
+              </NavigationContainer>
+            </CheckoutProvider>
+          </ProdutosProvider>
+        </PedidosProvider>
+      </CarrinhoProvider>
+    </EnderecoProvider>
   );
 }
 
