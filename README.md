@@ -10,9 +10,13 @@ Aplicativo feito para o Assessment (trabalho final) da matéria de Desenvolvimen
 
 # Principais tecnologias:
 
-A principal tecnologia utilizada foi o React Native (Expo) e suas bibliotecas, como a biblioteca de navegação, de ícones, de mapa, etc...
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
+- [React Navigation](https://reactnavigation.org/) (Roteamento e navegação)
+- [React Native Maps](https://github.com/react-native-maps/react-native-maps) (Geolocalização)
+- Context API (Gerenciamento de estados globais)
 
-Como rodar o App:
+# Como rodar o App:
 
 - Você precisará ter uma conta no firebase com o "Authentication" ativado. O firebase vai te fornecer todas as configurações da sua conta. Você precisará delas para rodar o App.
 - Depois clone o repositório e crie um arquivo chamado ".env" na raiz do projeto. Utilize como base o arquivo .env.exemple para saber como preencher o arquivo, depois pegue as configurações que o firebase te deu e coloque em cada variável do .env.
