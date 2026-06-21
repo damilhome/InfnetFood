@@ -24,7 +24,7 @@ export function PedidosProvider({ children }) {
   }
 
   function adicionarPedido(novoPedido) {
-    const novaLista = [...listaPedidos, novoPedido];
+    const novaLista = [novoPedido, ...listaPedidos];
     setListaPedidos(novaLista);
     salvarListaStorage(novaLista);
     Alert.alert("Compra realizada!");

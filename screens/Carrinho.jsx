@@ -73,7 +73,7 @@ export default function Carrinho() {
 
   function irParaCheckout() {
     const compraAtual = formatarPedido();
-    navigation.navigate("Checkout", { compraAtual });
+    navigation.navigate("Checkout", { compraAtual, entrega });
   }
 
   return listaProdutos.length >= 1 ? (

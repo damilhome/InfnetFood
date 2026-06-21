@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, ScrollView } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useTema } from "../contexts/TemaContext";
 import { useListaPedidos } from "../contexts/PedidosContext";
@@ -17,21 +17,23 @@ export default function Checkout() {
   const { adicionarPedido } = useListaPedidos();
   const { adicionarProduto, realizarCompra } = useCarrinho();
   const route = useRoute();
-  const { compraAtual } = route.params;
+  const { compraAtual, entrega } = route.params;
   const navigation = useNavigation();
 
-  function calcularTotal() {
-    let total = 0;
-    listaProdutos.forEach((produto) => {
-      total = total + produto.preco * produto.quantidade;
-    });
-    return total;
-  }
+  const faltaEndereco =
+    entrega &&
+    (!enderecoSelecionado || Object.keys(enderecoSelecionado).length === 0);
+  const faltaMetodo =
+    !metodoSelecionado || Object.keys(metodoSelecionado).length === 0;
+
+  const bloquearBtn = faltaEndereco || faltaMetodo;
 
   function handleRealizarCompra() {
     const compraAtualAtualizada = {
       ...compraAtual,
-      localEntrega: enderecoSelecionado[Object.keys(enderecoSelecionado)[0]],
+      localEntrega: entrega
+        ? enderecoSelecionado[Object.keys(enderecoSelecionado)[0]]
+        : null,
       formaPagamento: metodoSelecionado[Object.keys(metodoSelecionado)[0]],
     };
     adicionarPedido(compraAtualAtualizada);
@@ -52,11 +54,16 @@ export default function Checkout() {
           taxaEntrega={compraAtual.taxaEntrega}
         />
       </View>
-      <LocaisEntrega />
+      {entrega && <LocaisEntrega />}
       <FormaDePagamento />
-      {Object.keys(enderecoSelecionado).length === 0 ||
-      Object.keys(metodoSelecionado).length === 0 ? (
-        <DisabledActionBtn txt="Escolha um endereço e forma de pagamento" />
+      {bloquearBtn ? (
+        <DisabledActionBtn
+          txt={
+            entrega
+              ? "Escolha um endereço e forma de pagamento"
+              : "Escolha uma forma de pagamento"
+          }
+        />
       ) : (
         <ActionBtn
           txt="Realizar compra"
@@ -85,27 +92,3 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
-/* function calcularTotal() {
-    let total = 0;
-    listaProdutos.forEach((produto) => {
-      total = total + produto.preco * produto.quantidade;
-    });
-    return total;
-  }
-
-  function handleRealizarCompra() {
-    const agora = new Date();
-    const hora = agora.toLocaleTimeString();
-    const data = agora.toLocaleDateString();
-    const foiEntrega = entrega;
-    const compraAtual = {
-      produtos: listaProdutos,
-      hora,
-      data,
-      valorEntrega: taxaEntrega,
-      valorTotal: calcularTotal() + taxaEntrega,
-    };
-    adicionarPedido(compraAtual);
-    realizarCompra();
-  } */
