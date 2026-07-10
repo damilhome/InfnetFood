@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, Switch, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTema } from "../contexts/TemaContext";
+import ActionBtn from "../components/ActionBtn";
+import { deslogarUsuario } from "../services/autenticarFirebase";
 
 export default function Configuracoes() {
   const navigation = useNavigation();
@@ -11,19 +13,22 @@ export default function Configuracoes() {
       <Text style={[styles.titulo, { color: cores.textPrimary }]}>
         Configurações
       </Text>
-      <View style={styles.switcher}>
-        <Text style={[styles.opcao, { color: cores.textPrimary }]}>
-          Modo escuro
-        </Text>
-        <Switch
-          value={modoEscuro}
-          onValueChange={alterarTema}
-          trackColor={{
-            false: "#cbd5e1",
-            true: "#2563eb",
-          }}
-          thumbColor="#f8fafc"
-        />
+      <View style={styles.configs}>
+        <View style={styles.switcher}>
+          <Text style={[styles.opcao, { color: cores.textPrimary }]}>
+            Modo escuro
+          </Text>
+          <Switch
+            value={modoEscuro}
+            onValueChange={alterarTema}
+            trackColor={{
+              false: "#cbd5e1",
+              true: "#2563eb",
+            }}
+            thumbColor="#f8fafc"
+          />
+        </View>
+        <ActionBtn txt="Sair" executar={deslogarUsuario} />
       </View>
     </View>
   );
@@ -32,7 +37,7 @@ export default function Configuracoes() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 15,
+    padding: 15,
     paddingTop: 45,
   },
   titulo: {
@@ -41,6 +46,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  configs: {
+    flex: 1,
+    justifyContent: "space-between",
   },
   switcher: {
     flexDirection: "row",
