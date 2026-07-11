@@ -21,7 +21,11 @@ export default function Perfil() {
           <ResumoPerfil nome={dadosPerfil.nome} email={dadosPerfil.email} />
           <View>
             <ConfigBtn iconName="person" txt="Dados do perfil" />
-            <ConfigBtn iconName="settings" txt="Configurações" />
+            <ConfigBtn
+              iconName="settings"
+              txt="Configurações"
+              navigateTo="Configuracoes"
+            />
             <ConfigBtn iconName="location" txt="Endereços" />
           </View>
         </View>

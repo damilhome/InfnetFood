@@ -18,6 +18,7 @@ import { CarrinhoProvider } from "./contexts/CarrinhoContext.js";
 import { PedidosProvider } from "./contexts/PedidosContext.js";
 import EnderecoProvider from "./contexts/EnderecoContext.js";
 import { CheckoutProvider } from "./contexts/CheckoutContex.js";
+import Configuracoes from "./screens/Configuracoes.jsx";
 
 const Stack = createStackNavigator();
 
@@ -76,6 +77,10 @@ function AppNavigator() {
                     <Stack.Screen
                       name="Cadastrar endereço"
                       component={CadastrarEndereco}
+                    />
+                    <Stack.Screen
+                      name="Configuracoes"
+                      component={Configuracoes}
                     />
                   </Stack.Navigator>
                 )}

@@ -8,9 +8,6 @@ export default function Configuracoes() {
 
   return (
     <View style={[styles.container, { backgroundColor: cores.background }]}>
-      <Text style={[styles.titulo, { color: cores.textPrimary }]}>
-        Configurações
-      </Text>
       <View style={styles.configs}>
         <View style={styles.switcher}>
           <Text style={[styles.opcao, { color: cores.textPrimary }]}>
@@ -35,14 +32,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
-    paddingTop: 45,
-  },
-  titulo: {
-    padding: 15,
-    paddingLeft: 0,
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
   },
   configs: {
     flex: 1,
