@@ -2,10 +2,12 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useTema } from "../contexts/TemaContext";
 import { useCheckout } from "../contexts/CheckoutContex";
+import { useEndereco } from "../contexts/EnderecoContext";
 
 export default function CardEnderecoCheckout({ endereco, index }) {
   const { cores } = useTema();
   const { enderecoSelecionado, setEnderecoSelecionado } = useCheckout();
+  const { formatarEndereco } = useEndereco();
 
   return (
     <View style={styles.card}>
@@ -13,7 +15,15 @@ export default function CardEnderecoCheckout({ endereco, index }) {
         <Text style={[styles.apelido, { color: cores.textPrimary }]}>
           {endereco.apelido}
         </Text>
-        <Text style={{ color: cores.textSecondary }}>{endereco.endereco}</Text>
+        <Text style={{ color: cores.textSecondary }}>
+          {formatarEndereco(
+            endereco.logradouro,
+            endereco.numero,
+            endereco.bairro,
+            endereco.cidade,
+            endereco.estado,
+          )}
+        </Text>
         <Text style={{ color: cores.textSecondary }}>
           Complemento: {endereco.complemento}
         </Text>

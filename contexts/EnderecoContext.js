@@ -23,6 +23,10 @@ export default function EnderecoProvider({ children }) {
     }
   }
 
+  function formatarEndereco(logradouro, numero, bairro, cidade, estado) {
+    return `${logradouro}, ${numero} - ${bairro}, ${cidade} - ${estado}`;
+  }
+
   function criarNovoEndereco(
     estado,
     cidade,
@@ -35,7 +39,11 @@ export default function EnderecoProvider({ children }) {
   ) {
     const novoEndereco = {
       apelido,
-      endereco: `${logradouro}, ${numero} - ${bairro}, ${cidade} - ${estado}`,
+      logradouro,
+      numero,
+      bairro,
+      cidade,
+      estado,
       complemento,
       pontoReferencia,
     };
@@ -60,7 +68,9 @@ export default function EnderecoProvider({ children }) {
   }, []);
 
   return (
-    <EnderecoContext.Provider value={{ listaEnderecos, criarNovoEndereco }}>
+    <EnderecoContext.Provider
+      value={{ listaEnderecos, criarNovoEndereco, formatarEndereco }}
+    >
       {children}
     </EnderecoContext.Provider>
   );
