@@ -27,6 +27,16 @@ export default function EnderecoProvider({ children }) {
     return `${logradouro}, ${numero} - ${bairro}, ${cidade} - ${estado}`;
   }
 
+  function removerEndereco(itemIndex) {
+    const novaLista = listaEnderecos.filter((item, index) => {
+      if (index !== itemIndex) {
+        return item;
+      }
+    });
+    setListaEnderecos(novaLista);
+    salvarListaStorage(novaLista);
+  }
+
   function criarNovoEndereco(
     estado,
     cidade,
@@ -69,7 +79,12 @@ export default function EnderecoProvider({ children }) {
 
   return (
     <EnderecoContext.Provider
-      value={{ listaEnderecos, criarNovoEndereco, formatarEndereco }}
+      value={{
+        listaEnderecos,
+        criarNovoEndereco,
+        formatarEndereco,
+        removerEndereco,
+      }}
     >
       {children}
     </EnderecoContext.Provider>

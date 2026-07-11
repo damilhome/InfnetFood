@@ -19,6 +19,7 @@ import { PedidosProvider } from "./contexts/PedidosContext.js";
 import EnderecoProvider from "./contexts/EnderecoContext.js";
 import { CheckoutProvider } from "./contexts/CheckoutContex.js";
 import Configuracoes from "./screens/Configuracoes.jsx";
+import Enderecos from "./screens/Enderecos.jsx";
 
 const Stack = createStackNavigator();
 
@@ -82,6 +83,7 @@ function AppNavigator() {
                       name="Configuracoes"
                       component={Configuracoes}
                     />
+                    <Stack.Screen name="Endereços" component={Enderecos} />
                   </Stack.Navigator>
                 )}
               </NavigationContainer>

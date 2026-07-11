@@ -26,7 +26,11 @@ export default function Perfil() {
               txt="Configurações"
               navigateTo="Configuracoes"
             />
-            <ConfigBtn iconName="location" txt="Endereços" />
+            <ConfigBtn
+              iconName="location"
+              txt="Endereços"
+              navigateTo="Endereços"
+            />
           </View>
         </View>
         <ActionBtn txt="Sair" executar={deslogarUsuario} />
