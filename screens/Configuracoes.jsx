@@ -1,8 +1,6 @@
 import { StyleSheet, Text, View, Switch, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTema } from "../contexts/TemaContext";
-import ActionBtn from "../components/ActionBtn";
-import { deslogarUsuario } from "../services/autenticarFirebase";
 
 export default function Configuracoes() {
   const navigation = useNavigation();
@@ -28,7 +26,6 @@ export default function Configuracoes() {
             thumbColor="#f8fafc"
           />
         </View>
-        <ActionBtn txt="Sair" executar={deslogarUsuario} />
       </View>
     </View>
   );

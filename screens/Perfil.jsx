@@ -1,8 +1,12 @@
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { useTema } from "../contexts/TemaContext";
+import { deslogarUsuario } from "../services/autenticarFirebase";
 import dadosPerfil from "../data/perfil/dadosPerfil";
 import ApresentarDados from "../components/ApresentarDados";
+import ResumoPerfil from "../components/ResumoPerfil";
 import TituloSecao from "../components/TituloSecao";
+import ConfigBtn from "../components/ConfigBtn";
+import ActionBtn from "../components/ActionBtn";
 
 export default function Perfil() {
   const { cores } = useTema();
@@ -13,7 +17,63 @@ export default function Perfil() {
         contentContainerStyle={styles.dadosPerfil}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.pessoaContainer}>
+        <View style={{ gap: 20 }}>
+          <ResumoPerfil nome={dadosPerfil.nome} email={dadosPerfil.email} />
+          <View>
+            <ConfigBtn iconName="person" txt="Dados do perfil" />
+            <ConfigBtn iconName="settings" txt="Configurações" />
+            <ConfigBtn iconName="location" txt="Endereços" />
+          </View>
+        </View>
+        <ActionBtn txt="Sair" executar={deslogarUsuario} />
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 15,
+    paddingTop: 45,
+  },
+  titulo: {
+    padding: 15,
+    paddingLeft: 0,
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  dadosPerfil: {
+    paddingVertical: 20,
+    flex: 1,
+    justifyContent: "space-between",
+  },
+  pessoaContainer: {
+    width: "100%",
+    alignItems: "center",
+    paddingTop: 15,
+    gap: 15,
+  },
+  imagemPerfil: {
+    width: 200,
+    height: 200,
+    borderRadius: 150,
+  },
+  nome: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  secao: {
+    gap: 6,
+  },
+  infosContainer: {
+    gap: 3,
+  },
+});
+
+{
+  /* <View style={styles.pessoaContainer}>
           <Image
             source={require("../data/perfil/foto_perfil.jpg")}
             style={styles.imagemPerfil}
@@ -21,8 +81,10 @@ export default function Perfil() {
           <Text style={[styles.nome, { color: cores.textPrimary }]}>
             {dadosPerfil.nome}
           </Text>
-        </View>
-        <View style={styles.secao}>
+        </View> */
+}
+{
+  /* <View style={styles.secao}>
           <TituloSecao titulo="Usuário" />
           <View style={styles.infosContainer}>
             <ApresentarDados label="E-mail:" txt={dadosPerfil.email} />
@@ -47,48 +109,5 @@ export default function Perfil() {
               txt={dadosPerfil.complemento}
             />
           </View>
-        </View>
-      </ScrollView>
-    </View>
-  );
+        </View> */
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 15,
-    paddingTop: 45,
-  },
-  titulo: {
-    padding: 15,
-    paddingLeft: 0,
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  dadosPerfil: {
-    gap: 20,
-    paddingBottom: 20,
-  },
-  pessoaContainer: {
-    width: "100%",
-    alignItems: "center",
-    paddingTop: 15,
-    gap: 15,
-  },
-  imagemPerfil: {
-    width: 200,
-    height: 200,
-    borderRadius: 150,
-  },
-  nome: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  secao: {
-    gap: 6,
-  },
-  infosContainer: {
-    gap: 3,
-  },
-});
