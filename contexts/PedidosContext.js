@@ -23,11 +23,24 @@ export function PedidosProvider({ children }) {
     }
   }
 
+  async function removerListaStorage(novaLista) {
+    try {
+      await removerDados(CHAVE_STORAGE);
+    } catch (error) {
+      console.error("Erro ao remover os dados do Storage!", error);
+    }
+  }
+
   function adicionarPedido(novoPedido) {
     const novaLista = [novoPedido, ...listaPedidos];
     setListaPedidos(novaLista);
     salvarListaStorage(novaLista);
     Alert.alert("Compra realizada!");
+  }
+
+  function limparLista() {
+    setListaPedidos([]);
+    removerListaStorage();
   }
 
   useEffect(() => {
@@ -50,6 +63,7 @@ export function PedidosProvider({ children }) {
       value={{
         listaPedidos,
         adicionarPedido,
+        limparLista,
       }}
     >
       {children}
