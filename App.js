@@ -21,6 +21,7 @@ import { CheckoutProvider } from "./contexts/CheckoutContex.js";
 import Configuracoes from "./screens/Configuracoes.jsx";
 import Enderecos from "./screens/Enderecos.jsx";
 import EditarEndereco from "./screens/EditarEndereco.jsx";
+import DadosPerfil from "./screens/DadosPerfil.jsx";
 
 const Stack = createStackNavigator();
 
@@ -89,6 +90,7 @@ function AppNavigator() {
                       name="Editar Endereço"
                       component={EditarEndereco}
                     />
+                    <Stack.Screen name="Dados Perfil" component={DadosPerfil} />
                   </Stack.Navigator>
                 )}
               </NavigationContainer>

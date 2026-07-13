@@ -20,7 +20,11 @@ export default function Perfil() {
         <View style={{ gap: 20 }}>
           <ResumoPerfil nome={dadosPerfil.nome} email={dadosPerfil.email} />
           <View>
-            <ConfigBtn iconName="person" txt="Dados do perfil" />
+            <ConfigBtn
+              iconName="person"
+              txt="Dados do perfil"
+              navigateTo="Dados Perfil"
+            />
             <ConfigBtn
               iconName="settings"
               txt="Configurações"
