@@ -20,6 +20,7 @@ import EnderecoProvider from "./contexts/EnderecoContext.js";
 import { CheckoutProvider } from "./contexts/CheckoutContex.js";
 import Configuracoes from "./screens/Configuracoes.jsx";
 import Enderecos from "./screens/Enderecos.jsx";
+import EditarEndereco from "./screens/EditarEndereco.jsx";
 
 const Stack = createStackNavigator();
 
@@ -84,6 +85,10 @@ function AppNavigator() {
                       component={Configuracoes}
                     />
                     <Stack.Screen name="Endereços" component={Enderecos} />
+                    <Stack.Screen
+                      name="Editar Endereço"
+                      component={EditarEndereco}
+                    />
                   </Stack.Navigator>
                 )}
               </NavigationContainer>

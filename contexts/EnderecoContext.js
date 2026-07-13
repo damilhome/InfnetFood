@@ -37,8 +37,20 @@ export default function EnderecoProvider({ children }) {
     salvarListaStorage(novaLista);
   }
 
+  function editarEndereco(itemIndex, novoEndereco) {
+    const novaLista = listaEnderecos.map((item, index) => {
+      if (index === itemIndex) {
+        return novoEndereco;
+      }
+      return item;
+    });
+    setListaEnderecos(novaLista);
+    salvarListaStorage(novaLista);
+  }
+
   function criarNovoEndereco(
     estado,
+    uf,
     cidade,
     logradouro,
     numero,
@@ -54,6 +66,7 @@ export default function EnderecoProvider({ children }) {
       bairro,
       cidade,
       estado,
+      uf,
       complemento,
       pontoReferencia,
     };
@@ -84,6 +97,7 @@ export default function EnderecoProvider({ children }) {
         criarNovoEndereco,
         formatarEndereco,
         removerEndereco,
+        editarEndereco,
       }}
     >
       {children}

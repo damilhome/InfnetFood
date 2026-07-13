@@ -15,15 +15,20 @@ import { AntDesign } from "@expo/vector-icons";
 import ActionBtn from "../components/ActionBtn";
 import { useEndereco } from "../contexts/EnderecoContext";
 import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 
 const URL_ESTADOS =
   "https://servicodados.ibge.gov.br/api/v1/localidades/estados";
 const URL_CIDADES_PARCIAL =
   "https://servicodados.ibge.gov.br/api/v1/localidades/estados/";
 
-export default function CadastrarEndereco() {
+export default function EditarEndereco() {
+  const route = useRoute();
+  const { index } = route.params;
+  const { listaEnderecos, criarNovoEndereco, editarEndereco } = useEndereco();
   const { cores } = useTema();
-  const { criarNovoEndereco } = useEndereco();
+  const [enderecoParaEditar, setEnderecoParaEditar] = useState({});
+
   const navigation = useNavigation();
   const [carregandoEstados, setCarregandoEstados] = useState(false);
   const [carregandoCidades, setCarregandoCidades] = useState(false);
@@ -86,36 +91,68 @@ export default function CadastrarEndereco() {
     return valido;
   }
 
-  function criarEndereco() {
+  /* TODO: Atualizar a função para apenas atualizar o endereço atual */
+
+  function atualizarEndereco() {
     const erro = verificarCampos();
 
     if (!erro) {
-      criarNovoEndereco(
-        estadoSelecionado.nome,
-        estadoSelecionado.uf,
-        cidadeSelecionada.nome,
+      const novoEndereco = {
+        estado: estadoSelecionado.nome,
+        uf: estadoSelecionado.uf,
+        cidade: cidadeSelecionada.nome,
         logradouro,
         numero,
         bairro,
         complemento,
         pontoReferencia,
         apelido,
-      );
+      };
+      editarEndereco(index, novoEndereco);
       navigation.goBack();
     }
   }
 
   useEffect(() => {
-    carregarDados(URL_ESTADOS, setEstados, setCarregandoEstados);
+    setEnderecoParaEditar(listaEnderecos[index]);
   }, []);
 
   useEffect(() => {
+    setEstadoSelecionado({
+      nome: enderecoParaEditar.estado,
+      uf: enderecoParaEditar.uf,
+      selecionado: true,
+    });
+  }, [enderecoParaEditar]);
+
+  useEffect(() => {
+    setCidadeSelecionada({
+      nome: enderecoParaEditar.cidade,
+      selecionado: true,
+    });
+  }, [estadoSelecionado]);
+
+  useEffect(() => {
+    setLogradouro(enderecoParaEditar.logradouro);
+    setNumero(enderecoParaEditar.numero);
+    if (enderecoParaEditar.numero === "S/N") setSemNumero(!semNumero);
+    setBairro(enderecoParaEditar.bairro);
+    setComplemento(enderecoParaEditar.complemento);
+    setPontoReferencia(enderecoParaEditar.pontoReferencia);
+    setApelido(enderecoParaEditar.apelido);
+  }, [enderecoParaEditar]);
+
+  useEffect(() => {
     carregarDados(
-      `${URL_CIDADES_PARCIAL}${estadoSelecionado.uf}/municipios`,
+      `${URL_CIDADES_PARCIAL}${enderecoParaEditar.uf}/municipios`,
       setCidades,
       setCarregandoCidades,
     );
   }, [estadoSelecionado]);
+
+  useEffect(() => {
+    carregarDados(URL_ESTADOS, setEstados, setCarregandoEstados);
+  }, []);
 
   useEffect(() => {
     if (semNumero) {
@@ -179,16 +216,14 @@ export default function CadastrarEndereco() {
             erroSelecao={msgsErro.erroEstado}
             resolverErroSelecao={setMsgsErro}
           />
-          {cidades.length > 0 && (
-            <Select
-              opcoes={cidades}
-              valor={cidadeSelecionada}
-              setValor={setCidadeSelecionada}
-              campo="cidade"
-              erroSelecao={msgsErro.erroCidade}
-              resolverErroSelecao={setMsgsErro}
-            />
-          )}
+          <Select
+            opcoes={cidades}
+            valor={cidadeSelecionada}
+            setValor={setCidadeSelecionada}
+            campo="cidade"
+            erroSelecao={msgsErro.erroCidade}
+            resolverErroSelecao={setMsgsErro}
+          />
         </View>
         <View style={styles.inputs}>
           <View style={styles.inputContainer}>
@@ -395,8 +430,8 @@ export default function CadastrarEndereco() {
         </View>
       </ScrollView>
       <ActionBtn
-        txt="Criar endereço"
-        executar={criarEndereco}
+        txt="Atualizar"
+        executar={atualizarEndereco}
         carregando={false}
       />
     </View>

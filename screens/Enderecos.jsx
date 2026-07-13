@@ -10,14 +10,21 @@ import { useEndereco } from "../contexts/EnderecoContext";
 import { useTema } from "../contexts/TemaContext";
 import CardEndereco from "../components/CardEndereco";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Enderecos() {
   const { cores } = useTema();
   const { listaEnderecos, removerEndereco } = useEndereco();
   const [visivel, setVisivel] = useState({ visivel: false, index: null });
+  const navigation = useNavigation();
 
   function lidarRemoverEndereco() {
     removerEndereco(visivel.index);
+    setVisivel({ visivel: false, index: null });
+  }
+
+  function lidarEditarEndereco() {
+    navigation.navigate("Editar Endereço", { index: visivel.index });
     setVisivel({ visivel: false, index: null });
   }
 
@@ -56,7 +63,7 @@ export default function Enderecos() {
           >
             <Pressable
               style={[styles.opcao, { borderBottomColor: cores.inputBorder }]}
-              onPress={() => lidarComSelecao(item)}
+              onPress={lidarEditarEndereco}
             >
               <Text style={{ color: cores.textPrimary, fontSize: 16 }}>
                 Editar endereço
