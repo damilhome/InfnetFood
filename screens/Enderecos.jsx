@@ -11,6 +11,7 @@ import { useTema } from "../contexts/TemaContext";
 import CardEndereco from "../components/CardEndereco";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import ActionBtn from "../components/ActionBtn";
 
 export default function Enderecos() {
   const { cores } = useTema();
@@ -26,6 +27,10 @@ export default function Enderecos() {
   function lidarEditarEndereco() {
     navigation.navigate("Editar Endereço", { index: visivel.index });
     setVisivel({ visivel: false, index: null });
+  }
+
+  function lidarCadastrarEndereco() {
+    navigation.navigate("Cadastrar endereço");
   }
 
   return (
@@ -46,6 +51,7 @@ export default function Enderecos() {
           </Text>
         )}
       </ScrollView>
+      <ActionBtn txt="Cadastrar endereço" executar={lidarCadastrarEndereco} />
 
       <Modal visible={visivel.visivel} transparent={true}>
         <Pressable
@@ -88,6 +94,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
+    paddingBottom: 25,
   },
   modalOverlay: {
     flex: 1,
