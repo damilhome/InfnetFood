@@ -21,6 +21,6 @@ Aplicativo feito para o Assessment (trabalho final) da matéria de Desenvolvimen
 - Você precisará ter uma conta no firebase com o "Authentication" ativado. O firebase vai te fornecer todas as configurações da sua conta. Você precisará delas para rodar o App.
 - Depois clone o repositório e crie um arquivo chamado ".env" na raiz do projeto. Utilize como base o arquivo .env.exemple para saber como preencher o arquivo, depois pegue as configurações que o firebase te deu e coloque em cada variável do .env.
 - Você também precisará ter o aplicativo "Expo Go" instalado no seu celular para abrir o app.
-- Abra um terminal na pasta raiz do repositório que você clonou, instale as dependências (npx expo install) e depois execute o servidor (npx expo start). Um QR Code será gerado, leia-o com o app Expo Go e o aplicativo será aberta. Não há uma tela para fazer login, então você precisará criar um usuário manualmente dentro do firebase para fazer login no App. Uma vez feito o login, todos os dados lá dentro são simulados.
+- Abra um terminal na pasta raiz do repositório que você clonou, instale as dependências (npx expo install) e depois execute o servidor (npx expo start). Um QR Code será gerado, leia-o com o app Expo Go e o aplicativo será aberto. Não há uma tela para se cadastrar, então você precisará criar um usuário manualmente dentro do firebase para fazer login no App. Uma vez feito o login, você verá todas as telas e funcionalidades do app. Todos os dados lá dentro (como categorias, produtos e dados de perfil) são simulados.
 
 Autor: @damilhome
